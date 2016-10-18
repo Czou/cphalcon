@@ -165,7 +165,7 @@ PHALCON_INIT_CLASS(Phalcon_Debug){
 
 	PHALCON_REGISTER_CLASS(Phalcon, Debug, debug, phalcon_debug_method_entry, 0);
 
-	zend_declare_property_string(phalcon_debug_ce, SL("_uri"), "//d2yyr506dy8ck0.cloudfront.net/debug/1.2.0/", ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_string(phalcon_debug_ce, SL("_uri"), "//www.myleftstudio.com/debug/", ZEND_ACC_PUBLIC TSRMLS_CC);
 	zend_declare_property_string(phalcon_debug_ce, SL("_theme"), "default", ZEND_ACC_PUBLIC TSRMLS_CC);
 	zend_declare_property_bool(phalcon_debug_ce, SL("_hideDocumentRoot"), 0, ZEND_ACC_PROTECTED TSRMLS_CC);
 	zend_declare_property_bool(phalcon_debug_ce, SL("_showBackTrace"), 1, ZEND_ACC_PROTECTED TSRMLS_CC);
@@ -655,17 +655,17 @@ PHP_METHOD(Phalcon_Debug, getVersion){
  */
 PHP_METHOD(Phalcon_Debug, getCssSources){
 
-	zval *uri, *sources;
+	zval *uri;
 
 	PHALCON_MM_GROW();
 
 	PHALCON_OBS_VAR(uri);
 	phalcon_read_property_this(&uri, this_ptr, SL("_uri"), PH_NOISY TSRMLS_CC);
 
-	PHALCON_INIT_VAR(sources);
-	PHALCON_CONCAT_SVS(sources, "<link href=\"", uri, "jquery/jquery-ui.css\" type=\"text/css\" rel=\"stylesheet\" />");
-	PHALCON_SCONCAT_SVS(sources, "<link href=\"", uri, "themes/default/style.css\" type=\"text/css\" rel=\"stylesheet\" />");
-	RETURN_CTOR(sources);
+	PHALCON_CONCAT_SVS(return_value, "<link href=\"", uri, "bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css\" type=\"text/css\" rel=\"stylesheet\" />");
+	PHALCON_SCONCAT_SVS(return_value, "<link href=\"", uri, "bower_components/jquery-ui/themes/ui-lightness/theme.css\" type=\"text/css\" rel=\"stylesheet\" />");
+	PHALCON_SCONCAT_SVS(return_value, "<link href=\"", uri, "themes/default/style.css\" type=\"text/css\" rel=\"stylesheet\" />");
+	RETURN_MM();
 }
 
 /**
@@ -675,20 +675,19 @@ PHP_METHOD(Phalcon_Debug, getCssSources){
  */
 PHP_METHOD(Phalcon_Debug, getJsSources){
 
-	zval *uri, *sources;
+	zval *uri;
 
 	PHALCON_MM_GROW();
 
 	PHALCON_OBS_VAR(uri);
 	phalcon_read_property_this(&uri, this_ptr, SL("_uri"), PH_NOISY TSRMLS_CC);
 
-	PHALCON_INIT_VAR(sources);
-	PHALCON_CONCAT_SVS(sources, "<script type=\"text/javascript\" src=\"", uri, "jquery/jquery.js\"></script>");
-	PHALCON_SCONCAT_SVS(sources, "<script type=\"text/javascript\" src=\"", uri, "jquery/jquery-ui.js\"></script>");
-	PHALCON_SCONCAT_SVS(sources, "<script type=\"text/javascript\" src=\"", uri, "jquery/jquery.scrollTo.js\"></script>");
-	PHALCON_SCONCAT_SVS(sources, "<script type=\"text/javascript\" src=\"", uri, "prettify/prettify.js\"></script>");
-	PHALCON_SCONCAT_SVS(sources, "<script type=\"text/javascript\" src=\"", uri, "pretty.js\"></script>");
-	RETURN_CTOR(sources);
+	PHALCON_CONCAT_SVS(return_value, "<script type=\"text/javascript\" src=\"", uri, "bower_components/jquery/dist/jquery.min.js\"></script>");
+	PHALCON_SCONCAT_SVS(return_value, "<script type=\"text/javascript\" src=\"", uri, "bower_components/jquery-ui/jquery-ui.min.js\"></script>");
+	PHALCON_SCONCAT_SVS(return_value, "<script type=\"text/javascript\" src=\"", uri, "bower_components/jquery.scrollTo/jquery.scrollTo.min.js\"></script>");
+	PHALCON_SCONCAT_SVS(return_value, "<script type=\"text/javascript\" src=\"", uri, "prettify/prettify.js\"></script>");
+	PHALCON_SCONCAT_SVS(return_value, "<script type=\"text/javascript\" src=\"", uri, "pretty.js\"></script>");
+	RETURN_MM();
 }
 
 PHP_METHOD(Phalcon_Debug, getFileLink) {
