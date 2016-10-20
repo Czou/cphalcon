@@ -418,6 +418,7 @@
 #include "validation/validator/file.h"
 #include "validation/validator/numericality.h"
 #include "validation/validator/alnum.h"
+#include "validation/validator/alpha.h"
 
 #include "chart/qrcode.h"
 #include "chart/captcha.h"
