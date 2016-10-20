@@ -420,6 +420,7 @@
 #include "validation/validator/alnum.h"
 #include "validation/validator/alpha.h"
 #include "validation/validator/digit.h"
+#include "validation/validator/date.h"
 
 #include "chart/qrcode.h"
 #include "chart/captcha.h"
