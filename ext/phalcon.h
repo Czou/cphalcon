@@ -417,6 +417,7 @@
 #include "validation/validator/url.h"
 #include "validation/validator/file.h"
 #include "validation/validator/numericality.h"
+#include "validation/validator/alnum.h"
 
 #include "chart/qrcode.h"
 #include "chart/captcha.h"
