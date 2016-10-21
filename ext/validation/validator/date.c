@@ -24,6 +24,7 @@
 #include "validation/message.h"
 #include "validation/exception.h"
 #include "validation.h"
+#include "../../date.h"
 
 #include "kernel/main.h"
 #include "kernel/memory.h"
@@ -78,7 +79,7 @@ PHALCON_INIT_CLASS(Phalcon_Validation_Validator_Date){
  */
 PHP_METHOD(Phalcon_Validation_Validator_Date, validate){
 
-	zval *validator, *attribute, *value = NULL, *allow_empty, *option, *format = NULL, *valid = NULL, *label;
+	zval *validator, *attribute, *value = NULL, *allow_empty, *format, *valid = NULL, *label;
 	zval *pairs, *message_str, *code, *prepared = NULL, *message;
 	zend_class_entry *ce = Z_OBJCE_P(getThis());
 
@@ -96,10 +97,8 @@ PHP_METHOD(Phalcon_Validation_Validator_Date, validate){
 		RETURN_MM_TRUE;
 	}
 
-	PHALCON_INIT_VAR(option);
-	ZVAL_STRING(option, "format", 1);
-
-	PHALCON_CALL_METHOD(&format, validator, "getoption", option);
+	PHALCON_OBS_VAR(format);
+	RETURN_MM_ON_FAILURE(phalcon_validation_validator_getoption_helper(ce, &format, getThis(), "format" TSRMLS_CC));
 
 	PHALCON_CALL_SELF(&valid, "valid", value, format);
 
@@ -155,11 +154,10 @@ PHP_METHOD(Phalcon_Validation_Validator_Date, valid){
 	phalcon_fetch_params(0, 1, 1, &value, &format);
 
 	if (!format) {
-		PHALCON_INIT_VAR(format);
-		ZVAL_STRING(format, "Y-m-d", 1);
+		format = PHALCON_GLOBAL(z_null);
 	}
 
-	PHALCON_CALL_CE_STATICW(&valid, phalcon_date_ce, "valid", date, format);
+	PHALCON_CALL_CE_STATICW(&valid, phalcon_date_ce, "valid", value, format);
 	if (!zend_is_true(valid)) {
 		RETURN_FALSE;
 	}

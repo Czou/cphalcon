@@ -30,6 +30,7 @@
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
 #include "kernel/operators.h"
+#include "kernel/string.h"
 
 #include "interned-strings.h"
 
@@ -157,7 +158,7 @@ PHP_METHOD(Phalcon_Validation_Validator_Alpha, valid){
 	PHALCON_INIT_VAR(valid);
 	RETURN_MM_ON_FAILURE(phalcon_preg_match(valid, regex, value, NULL TSRMLS_CC));
 
-	if (!zend_is_true(valid)) {
+	if (zend_is_true(valid)) {
 		RETURN_MM_FALSE;
 	}
 	
