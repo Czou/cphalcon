@@ -392,6 +392,10 @@ validation/validator/stringlength.c \
 validation/validator/url.c \
 validation/validator/file.c \
 validation/validator/numericality.c \
+validation/validator/alnum.c \
+validation/validator/alpha.c \
+validation/validator/digit.c \
+validation/validator/date.c \
 validation/validator.c \
 mvc/model/query/parser.c \
 mvc/model/query/scanner.c \

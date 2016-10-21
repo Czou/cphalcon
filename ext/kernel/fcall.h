@@ -299,7 +299,6 @@ typedef zend_function phalcon_fcall_cache_entry;
 #define PHALCON_CALL_CE_STATICW(return_value_ptr, class_entry, method, ...) \
 	do { \
 		zval *params_[] = {PHALCON_FETCH_VA_ARGS __VA_ARGS__}; \
-		PHALCON_OBSERVE_OR_NULLIFY_PPZV(return_value_ptr); \
 		RETURN_ON_FAILURE(phalcon_call_class_method_aparams(return_value_ptr, class_entry, phalcon_fcall_ce, NULL, method, PHALCON_FUNC_STRLEN(method), PHALCON_CALL_NUM_PARAMS(params_), PHALCON_PASS_CALL_PARAMS(params_) TSRMLS_CC)); \
 	} while (0)
 

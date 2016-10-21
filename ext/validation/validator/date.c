@@ -14,15 +14,17 @@
   +------------------------------------------------------------------------+
   | Authors: Andres Gutierrez <andres@phalconphp.com>                      |
   |          Eduar Carvajal <eduar@phalconphp.com>                         |
+  |          ZhuZongXin <dreamsxin@qq.com>                                 |
   +------------------------------------------------------------------------+
 */
 
-#include "validation/validator/url.h"
+#include "validation/validator/date.h"
 #include "validation/validator.h"
 #include "validation/validatorinterface.h"
 #include "validation/message.h"
 #include "validation/exception.h"
 #include "validation.h"
+#include "../../date.h"
 
 #include "kernel/main.h"
 #include "kernel/memory.h"
@@ -33,37 +35,37 @@
 #include "interned-strings.h"
 
 /**
- * Phalcon\Validation\Validator\Url
+ * Phalcon\Validation\Validator\Date
  *
- * Checks if a value has a correct URL format
+ * Check for alphanumeric character(s)
  *
  *<code>
- *use Phalcon\Validation\Validator\Url as UrlValidator;
+ *use Phalcon\Validation\Validator\Date as DateValidator;
  *
- *$validator->add('url', new UrlValidator(array(
- *   'message' => 'The url is not valid'
+ *$validator->add('username', new DateValidator(array(
+ *   'message' => 'The username is not valid'
  *)));
  *</code>
  */
-zend_class_entry *phalcon_validation_validator_url_ce;
+zend_class_entry *phalcon_validation_validator_date_ce;
 
-PHP_METHOD(Phalcon_Validation_Validator_Url, validate);
-PHP_METHOD(Phalcon_Validation_Validator_Url, valid);
+PHP_METHOD(Phalcon_Validation_Validator_Date, validate);
+PHP_METHOD(Phalcon_Validation_Validator_Date, valid);
 
-static const zend_function_entry phalcon_validation_validator_url_method_entry[] = {
-	PHP_ME(Phalcon_Validation_Validator_Url, validate, arginfo_phalcon_validation_validatorinterface_validate, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Validation_Validator_Url, valid, NULL, ZEND_ACC_PUBLIC)
+static const zend_function_entry phalcon_validation_validator_date_method_entry[] = {
+	PHP_ME(Phalcon_Validation_Validator_Date, validate, arginfo_phalcon_validation_validatorinterface_validate, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Validation_Validator_Date, valid, NULL, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
 /**
- * Phalcon\Validation\Validator\Url initializer
+ * Phalcon\Validation\Validator\Date initializer
  */
-PHALCON_INIT_CLASS(Phalcon_Validation_Validator_Url){
+PHALCON_INIT_CLASS(Phalcon_Validation_Validator_Date){
 
-	PHALCON_REGISTER_CLASS_EX(Phalcon\\Validation\\Validator, Url, validation_validator_url, phalcon_validation_validator_ce, phalcon_validation_validator_url_method_entry, 0);
+	PHALCON_REGISTER_CLASS_EX(Phalcon\\Validation\\Validator, Date, validation_validator_date, phalcon_validation_validator_ce, phalcon_validation_validator_date_method_entry, 0);
 
-	zend_class_implements(phalcon_validation_validator_url_ce TSRMLS_CC, 1, phalcon_validation_validatorinterface_ce);
+	zend_class_implements(phalcon_validation_validator_date_ce TSRMLS_CC, 1, phalcon_validation_validatorinterface_ce);
 
 	return SUCCESS;
 }
@@ -75,9 +77,9 @@ PHALCON_INIT_CLASS(Phalcon_Validation_Validator_Url){
  * @param string $attribute
  * @return boolean
  */
-PHP_METHOD(Phalcon_Validation_Validator_Url, validate){
+PHP_METHOD(Phalcon_Validation_Validator_Date, validate){
 
-	zval *validator, *attribute, *value = NULL, *allow_empty, *valid = NULL, *label;
+	zval *validator, *attribute, *value = NULL, *allow_empty, *format, *valid = NULL, *label;
 	zval *pairs, *message_str, *code, *prepared = NULL, *message;
 	zend_class_entry *ce = Z_OBJCE_P(getThis());
 
@@ -95,7 +97,10 @@ PHP_METHOD(Phalcon_Validation_Validator_Url, validate){
 		RETURN_MM_TRUE;
 	}
 
-	PHALCON_CALL_SELF(&valid, "valid", value);
+	PHALCON_OBS_VAR(format);
+	RETURN_MM_ON_FAILURE(phalcon_validation_validator_getoption_helper(ce, &format, getThis(), "format" TSRMLS_CC));
+
+	PHALCON_CALL_SELF(&valid, "valid", value, format);
 
 	if (PHALCON_IS_FALSE(valid)) {
 		PHALCON_OBS_VAR(label);
@@ -115,7 +120,7 @@ PHP_METHOD(Phalcon_Validation_Validator_Url, validate){
 		RETURN_MM_ON_FAILURE(phalcon_validation_validator_getoption_helper(ce, &message_str, getThis(), phalcon_interned_message TSRMLS_CC));
 		if (!zend_is_true(message_str)) {
 			PHALCON_OBSERVE_OR_NULLIFY_VAR(message_str);
-			RETURN_MM_ON_FAILURE(phalcon_validation_getdefaultmessage_helper(Z_OBJCE_P(validator), &message_str, validator, "Url" TSRMLS_CC));
+			RETURN_MM_ON_FAILURE(phalcon_validation_getdefaultmessage_helper(Z_OBJCE_P(validator), &message_str, validator, "Date" TSRMLS_CC));
 		}
 	
 		PHALCON_OBS_VAR(code);
@@ -126,7 +131,7 @@ PHP_METHOD(Phalcon_Validation_Validator_Url, validate){
 
 		PHALCON_CALL_FUNCTION(&prepared, "strtr", message_str, pairs);
 
-		message = phalcon_validation_message_construct_helper(prepared, attribute, "Url", code TSRMLS_CC);
+		message = phalcon_validation_message_construct_helper(prepared, attribute, "Date", code TSRMLS_CC);
 		Z_DELREF_P(message);
 	
 		PHALCON_CALL_METHOD(NULL, validator, "appendmessage", message);
@@ -142,21 +147,20 @@ PHP_METHOD(Phalcon_Validation_Validator_Url, validate){
  * @param string $value
  * @return boolean
  */
-PHP_METHOD(Phalcon_Validation_Validator_Url, valid){
+PHP_METHOD(Phalcon_Validation_Validator_Date, valid){
 
-	zval *value, *validate_url, *valid = NULL;
+	zval *value, *format = NULL, *valid = NULL;
 
-	PHALCON_MM_GROW();
+	phalcon_fetch_params(0, 1, 1, &value, &format);
 
-	phalcon_fetch_params(1, 1, 0, &value);
-
-	PHALCON_ALLOC_GHOST_ZVAL(validate_url);
-	ZVAL_LONG(validate_url, 273);
-	
-	PHALCON_CALL_FUNCTION(&valid, "filter_var", value, validate_url);
-	if (!zend_is_true(valid)) {
-		RETURN_MM_FALSE;
+	if (!format) {
+		format = PHALCON_GLOBAL(z_null);
 	}
-	
-	RETURN_MM_TRUE;
+
+	PHALCON_CALL_CE_STATICW(&valid, phalcon_date_ce, "valid", value, format);
+	if (!zend_is_true(valid)) {
+		RETURN_FALSE;
+	}
+
+	RETURN_TRUE;
 }

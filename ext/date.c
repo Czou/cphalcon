@@ -1274,7 +1274,8 @@ PHP_METHOD(Phalcon_Date, formatted_time){
  */
 PHP_METHOD(Phalcon_Date, valid){
 	
-	zval *date = NULL, *format = NULL, *time = NULL, *format_date = NULL;
+	zval *date = NULL, *format = NULL, *format_date = NULL, *errors = NULL, *warning_count = NULL, *error_count = NULL;
+	zend_class_entry *ce0;
 
 	PHALCON_MM_GROW();
 
@@ -1283,15 +1284,24 @@ PHP_METHOD(Phalcon_Date, valid){
 	if (!format) {
 		PHALCON_INIT_VAR(format);
 		ZVAL_STRING(format, "Y-m-d", 1);
+	} else if (Z_TYPE_P(format) == IS_NULL) {
+		PHALCON_INIT_NVAR(format);
+		ZVAL_STRING(format, "Y-m-d", 1);
 	}
 
-	
-	PHALCON_CALL_FUNCTION(&time, "strtotime", date);
-	PHALCON_CALL_FUNCTION(&format_date, "date", format, time);
+	ce0 = zend_fetch_class(SL("DateTime"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 
-	if (phalcon_is_equal(date, format_date TSRMLS_CC)) {
-		RETURN_MM_TRUE;
-	} else {
-		RETURN_MM_FALSE;
+	PHALCON_CALL_CE_STATIC(&format_date, ce0, "createfromformat", format, date);
+	PHALCON_CALL_CE_STATIC(&errors, ce0, "getlasterrors");
+
+	if (errors && Z_TYPE_P(errors) == IS_ARRAY) {
+		if (phalcon_array_isset_string_fetch(&warning_count, errors, SS("warning_count")) && PHALCON_GT_LONG(warning_count, 0)) {
+			RETURN_MM_FALSE;
+		}
+		if (phalcon_array_isset_string_fetch(&error_count, errors, SS("error_count")) && PHALCON_GT_LONG(error_count, 0)) {
+			RETURN_MM_FALSE;
+		}
 	}
+
+	RETURN_MM_TRUE;
 }
