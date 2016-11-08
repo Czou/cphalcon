@@ -151,6 +151,7 @@ mvc/urlinterface.c \
 mvc/user/component.c \
 mvc/user/plugin.c \
 mvc/user/module.c \
+mvc/user/logic.c \
 mvc/url.c \
 mvc/model.c \
 mvc/view.c \
