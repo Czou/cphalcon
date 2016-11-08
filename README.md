@@ -14,17 +14,6 @@ Get Started
 
 Phalcon is written in C with platform independence in mind. As a result, Phalcon is available on Microsoft Windows, GNU/Linux, and Mac OS X. You can either download a binary package for the system of your choice or build it from sources.
 
-### Windows
-
-To install Phalcon on Windows:
-
-1. Download [Phalcon for Windows](http://phalconphp.com/en/download/windows)
-2. Extract the DLL file and copy it to your PHP extensions directory
-3. Edit your php.ini file and add this line: `extension=php_phalcon.dll`
-4. Finally, restart your webserver
-
-**Hint:** To ensure that your Phalcon installation was successful, debug with `<?php phpinfo(); ?>` and search for a section mentioning the Phalcon extension.
-
 ### Linux/Unix/Mac
 
 On a Unix-based platform you can easily compile and install the extension from sources.
