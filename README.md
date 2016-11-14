@@ -1,9 +1,3 @@
-#[中文 Wiki](https://github.com/dreamsxin/cphalcon/wiki)
-
-## [捐贈名單（Donation）](https://github.com/dreamsxin/cphalcon/blob/master/DONATE.md)
-
-[Phalcon7 for PHP7](https://github.com/dreamsxin/cphalcon7)
-
 Phalcon Framework
 =================
 
@@ -70,6 +64,10 @@ External Links
 * [Support](http://phalconphp.com/support)
 * [Blog](http://blog.phalconphp.com)
 * [Twitter](http://twitter.com/phalconphp)
+* [中文帮助](https://github.com/dreamsxin/cphalcon7/wiki)
+* [捐贈名單（Donation）](https://github.com/dreamsxin/cphalcon7/blob/master/DONATE.md)
+* PHP5 系列 [Phalcon7](https://github.com/dreamsxin/cphalcon)
+* Zephir 系列 [Phalcon](https://github.com/phalcon/cphalcon)
 
 Current Build Status
 --------------------
