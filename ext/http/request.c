@@ -429,7 +429,7 @@ PHP_METHOD(Phalcon_Http_Request, getPut){
 	PHALCON_CALL_METHOD(&is_put, this_ptr, "isput");
 
 	if (!zend_is_true(is_put)) {
-		put = phalcon_get_global(SS("_PUT") TSRMLS_CC);
+		RETURN_EMPTY_ARRAY();
 	}
 	else {
 		PHALCON_OBS_VAR(put);
