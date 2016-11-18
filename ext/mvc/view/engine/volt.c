@@ -215,6 +215,9 @@ PHP_METHOD(Phalcon_Mvc_View_Engine_Volt, render){
 	}
 	
 	if (clean) {
+		if (unlikely(PHALCON_GLOBAL(debug).enable_debug)) {
+			phalcon_ob_flush(TSRMLS_C);
+		}
 		phalcon_ob_clean(TSRMLS_C);
 	}
 
@@ -258,7 +261,11 @@ PHP_METHOD(Phalcon_Mvc_View_Engine_Volt, render){
 	if (clean) {
 		PHALCON_INIT_VAR(contents);
 		phalcon_ob_get_contents(contents TSRMLS_CC);
-	
+
+		if (unlikely(PHALCON_GLOBAL(debug).enable_debug)) {
+			phalcon_ob_clean(TSRMLS_C);
+		}
+
 		view = phalcon_fetch_nproperty_this(this_ptr, SL("_view"), PH_NOISY TSRMLS_CC);
 		PHALCON_CALL_METHOD(NULL, view, "setcontent", contents);
 	}
