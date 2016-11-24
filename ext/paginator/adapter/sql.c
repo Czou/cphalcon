@@ -132,7 +132,7 @@ PHP_METHOD(Phalcon_Paginator_Adapter_Sql, __construct){
 	}
 	
 	if (!phalcon_array_isset_string_fetch(&total_sql, config, SS("total_sql"))) {
-		PHALCON_THROW_EXCEPTION_STRW(phalcon_paginator_exception_ce, "Parameter 'sql' is required");
+		PHALCON_THROW_EXCEPTION_STRW(phalcon_paginator_exception_ce, "Parameter 'total_sql' is required");
 		return;
 	}
 
