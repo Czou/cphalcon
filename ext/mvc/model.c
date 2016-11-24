@@ -1200,11 +1200,14 @@ PHP_METHOD(Phalcon_Mvc_Model, assign){
 		PHALCON_GET_HKEY(key, ah0, hp0);
 		PHALCON_GET_HVALUE(value);
 
+		if (Z_TYPE_P(white_list) == IS_ARRAY && !phalcon_fast_in_array(key, white_list TSRMLS_CC)) {
+			continue;
+		}
+
 		/**
 		 * Only string keys in the data are valid
 		 */
-		if (Z_TYPE_P(column_map) == IS_ARRAY) { 
-
+		if (Z_TYPE_P(column_map) == IS_ARRAY) {
 			/**
 			 * Every field must be part of the column map
 			 */
