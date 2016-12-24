@@ -96,7 +96,6 @@ PHALCON_INIT_CLASS(Phalcon_Chart_Captcha){
 	PHALCON_REGISTER_CLASS(Phalcon\\Chart, Captcha, chart_captcha, phalcon_chart_captcha_method_entry, 0);
 
 	zend_declare_property_null(phalcon_chart_captcha_ce, SL("_imagick"), ZEND_ACC_PROTECTED TSRMLS_CC);
-	zend_declare_property_null(phalcon_chart_captcha_ce, SL("_draw"), ZEND_ACC_PROTECTED TSRMLS_CC);
 	zend_declare_property_null(phalcon_chart_captcha_ce, SL("_word"), ZEND_ACC_PROTECTED TSRMLS_CC);
 	zend_declare_property_null(phalcon_chart_captcha_ce, SL("_font"), ZEND_ACC_PROTECTED TSRMLS_CC);
 	zend_declare_property_long(phalcon_chart_captcha_ce, SL("_fontSize"), 40, ZEND_ACC_PROTECTED TSRMLS_CC);
@@ -311,6 +310,7 @@ PHP_METHOD(Phalcon_Chart_Captcha, render){
 	PHALCON_CALL_METHOD(NULL, imagick, "stripImage");
 
 	PHALCON_RETURN_CALL_METHOD(imagick, "getImageBlob");
+	phalcon_update_property_this(this_ptr, SL("_imagick"), imagick TSRMLS_CC);
 
 	RETURN_MM();
 }
