@@ -19,7 +19,7 @@ before_install:
 before_script:
  - git submodule --quiet update --init --recursive
  - (cd ext; export CFLAGS="-g3 -O0 -std=gnu90 -Wall -Werror -Wno-error=uninitialized"; phpize && ./configure --silent --enable-phalcon && make --silent -j4 > /dev/null && sudo make --silent install && phpenv config-add ../unit-tests/ci/phalcon.ini)
- - ulimit -c unlimited || true
+ - ulimit -c unlimited -S || true
 
 script:
  - ZEND_DONT_UNLOAD_MODULES=1 $(phpenv which php) ./unit-tests/ci/phpunit.php --debug -c unit-tests/phpunit.xml
