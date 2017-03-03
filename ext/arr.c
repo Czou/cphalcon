@@ -65,7 +65,7 @@ PHP_METHOD(Phalcon_Arr, filter);
 PHP_METHOD(Phalcon_Arr, sum);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_is_assoc, 0, 0, 1)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_is_array, 0, 0, 1)
@@ -73,14 +73,14 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_is_array, 0, 0, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_path, 0, 0, 2)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, path)
 	ZEND_ARG_INFO(0, default_value)
 	ZEND_ARG_INFO(0, delimiter)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_set_path, 0, 0, 3)
-	ZEND_ARG_INFO(1, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, path)
 	ZEND_ARG_INFO(0, value)
 	ZEND_ARG_INFO(0, delimiter)
@@ -98,43 +98,43 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_get, 0, 0, 2)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_choice, 0, 0, 3)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, key)
 	ZEND_ARG_INFO(0, value1)
 	ZEND_ARG_INFO(0, value2)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_extract, 0, 0, 2)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, paths)
 	ZEND_ARG_INFO(0, default_value)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_pluck, 0, 0, 2)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, key)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_unshift, 0, 0, 3)
-	ZEND_ARG_INFO(1, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, key)
 	ZEND_ARG_INFO(0, val)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_map, 0, 0, 2)
 	ZEND_ARG_INFO(0, callbacks)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, keys)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_merge, 0, 0, 2)
-	ZEND_ARG_INFO(0, array1)
-	ZEND_ARG_INFO(0, array2)
+	ZEND_ARG_TYPE_INFO(0, array1, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO(0, array2, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_overwrite, 0, 0, 2)
-	ZEND_ARG_INFO(0, array1)
-	ZEND_ARG_INFO(0, array2)
+	ZEND_ARG_TYPE_INFO(0, array1, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO(0, array2, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_callback, 0, 0, 1)
@@ -142,25 +142,25 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_callback, 0, 0, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_flatten, 0, 0, 1)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_arrayobject, 0, 0, 1)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_key, 0, 0, 1)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, postion)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_filter, 0, 0, 1)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, callback)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_arr_sum, 0, 0, 1)
-	ZEND_ARG_INFO(0, array)
+	ZEND_ARG_TYPE_INFO(0, array, IS_ARRAY, 0)
 	ZEND_ARG_INFO(0, path)
 ZEND_END_ARG_INFO()
 
@@ -214,7 +214,7 @@ PHP_METHOD(Phalcon_Arr, is_assoc){
 	zval *array;
 
 	phalcon_fetch_params(0, 1, 0, &array);
-	
+
 	if (phalcon_array_is_associative(array)) {
 		RETURN_TRUE;
 	} else {
@@ -319,14 +319,14 @@ PHP_METHOD(Phalcon_Arr, path){
 		} else if (PHALCON_IS_STRING(key, "*")) {
 			PHALCON_INIT_NVAR(values);
 			array_init(values);
-			
+
 			phalcon_is_iterable(array, &ah0, &hp0, 0, 0);
-	
+
 			while (zend_hash_get_current_data_ex(ah0, (void**) &hd, &hp0) == SUCCESS) {
 				PHALCON_GET_HVALUE(arr);
 
 				PHALCON_CALL_SELF(&value, "path", arr, keys);
-				
+
 				if (Z_TYPE_P(value) != IS_NULL) {
 					phalcon_array_append(&values, value, PH_COPY);
 				}
@@ -524,14 +524,17 @@ PHP_METHOD(Phalcon_Arr, get){
 
 	phalcon_fetch_params(1, 2, 1, &array, &keys, &default_value);
 
-	if (Z_TYPE_P(array) == IS_OBJECT) { 
-		PHALCON_CALL_FUNCTION(&arr, "get_object_vars", array);
-	} else {
-		PHALCON_CPY_WRT(arr, array);
-	}
-
 	if (!default_value) {
 		PHALCON_INIT_VAR(default_value);
+	}
+
+	if (Z_TYPE_P(array) == IS_OBJECT) {
+		PHALCON_CALL_FUNCTION(&arr, "get_object_vars", array);
+	} else if (Z_TYPE_P(array) == IS_ARRAY) {
+		PHALCON_CPY_WRT(arr, array);
+	} else {
+		ZVAL_ZVAL(return_value, default_value, 1, 0);
+		RETURN_MM();
 	}
 
 	if (Z_TYPE_P(keys) == IS_ARRAY) {
@@ -568,7 +571,7 @@ PHP_METHOD(Phalcon_Arr, choice){
 
 	phalcon_fetch_params(1, 3, 1, &array, &key, &value1, &value2);
 
-	if (Z_TYPE_P(array) == IS_OBJECT) { 
+	if (Z_TYPE_P(array) == IS_OBJECT) {
 		PHALCON_CALL_FUNCTION(&arr, "get_object_vars", array);
 	} else {
 		PHALCON_CPY_WRT(arr, array);
@@ -591,7 +594,7 @@ PHP_METHOD(Phalcon_Arr, choice){
  *
  *     // Get the values "username", "password" from $_POST
  *     $auth = \Phalcon\Arr::extract($_POST, array('username', 'password'));
- *     
+ *
  *     // Get the value "level1.level2a" from $data
  *     $data = array('level1' => array('level2a' => 'value 1', 'level2b' => 'value 2'));
  *     \Phalcon\Arr::extract($data, array('level1.level2a', 'password'));
@@ -765,7 +768,7 @@ PHP_METHOD(Phalcon_Arr, map){
 
 					PHALCON_INIT_NVAR(value);
 					PHALCON_CALL_USER_FUNC_ARRAY(value, *callback, params);
-					
+
 					PHALCON_CPY_WRT(val, value);
 
 					phalcon_array_update_zval(&array, key, value, PH_COPY);
@@ -863,7 +866,7 @@ PHP_METHOD(Phalcon_Arr, merge){
 	}
 
 	PHALCON_CALL_FUNCTION(&arg_num, "func_num_args");
- 
+
 	if (Z_LVAL_P(arg_num) > 2) {
 		PHALCON_CALL_FUNCTION(&arg_list, "func_get_args");
 
@@ -876,7 +879,7 @@ PHP_METHOD(Phalcon_Arr, merge){
 
 		while (zend_hash_get_current_data_ex(ah0, (void**) &hd, &hp0) == SUCCESS) {
 			PHALCON_GET_HVALUE(value);
-			
+
 			PHALCON_INIT_NVAR(arr);
 			PHALCON_CALL_SELF(&arr, "merge", array1, value);
 
