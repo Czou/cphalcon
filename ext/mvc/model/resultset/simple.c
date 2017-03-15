@@ -61,6 +61,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_mvc_model_resultset_simple___construct, 0
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_mvc_model_resultset_simple_toarray, 0, 0, 0)
+	ZEND_ARG_INFO(0, columns)
 	ZEND_ARG_INFO(0, renameColumns)
 ZEND_END_ARG_INFO()
 
@@ -132,7 +133,7 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, __construct){
 		RETURN_MM_NULL();
 	}
 
-	/** 
+	/**
 	 * Use only fetch assoc
 	 */
 	PHALCON_INIT_VAR(fetch_assoc);
@@ -144,7 +145,7 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, __construct){
 
 	PHALCON_CALL_METHOD(&row_count, result, "numrows");
 
-	/** 
+	/**
 	 * Check if it's a big resultset
 	 */
 	PHALCON_INIT_VAR(big_resultset);
@@ -155,12 +156,12 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, __construct){
 		phalcon_update_property_long(this_ptr, SL("_type"), 0 TSRMLS_CC);
 	}
 
-	/** 
+	/**
 	 * Update the row-count
 	 */
 	phalcon_update_property_this(this_ptr, SL("_count"), row_count TSRMLS_CC);
 
-	/** 
+	/**
 	 * Set if the returned resultset must keep the record snapshots
 	 */
 	phalcon_update_property_this(this_ptr, SL("_keepSnapshots"), keep_snapshots TSRMLS_CC);
@@ -227,25 +228,25 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, valid){
 		RETURN_MM_FALSE;
 	}
 
-	/** 
+	/**
 	 * Set records as dirty state PERSISTENT by default
 	 */
 	PHALCON_INIT_VAR(dirty_state);
 	ZVAL_LONG(dirty_state, 0);
 
-	/** 
+	/**
 	 * Get current hydration mode
 	 */
 	PHALCON_OBS_VAR(hydrate_mode);
 	phalcon_read_property_this(&hydrate_mode, this_ptr, SL("_hydrateMode"), PH_NOISY TSRMLS_CC);
 
-	/** 
+	/**
 	 * Tell if the resultset is keeping snapshots
 	 */
 	PHALCON_OBS_VAR(keep_snapshots);
 	phalcon_read_property_this(&keep_snapshots, this_ptr, SL("_keepSnapshots"), PH_NOISY TSRMLS_CC);
 
-	/** 
+	/**
 	 * Get the resultset column map
 	 */
 	PHALCON_OBS_VAR(column_map);
@@ -262,7 +263,7 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, valid){
 		ce = phalcon_mvc_model_ce;
 	}
 
-	/** 
+	/**
 	 * Hydrate based on the current hydration
 	 */
 	switch (phalcon_get_intval(hydrate_mode)) {
@@ -271,13 +272,13 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, valid){
 			PHALCON_OBS_VAR(rows_objects);
 			phalcon_read_property_this(&rows_objects, this_ptr, SL("_rowsModels"), PH_NOISY TSRMLS_CC);
 			if (!phalcon_array_isset(rows_objects, key)) {
-				/** 
+				/**
 				 * this_ptr->model is the base entity
 				 */
 				PHALCON_OBS_VAR(model);
 				phalcon_read_property_this(&model, this_ptr, SL("_model"), PH_NOISY TSRMLS_CC);
 
-				/** 
+				/**
 				 * Performs the standard hydration based on objects
 				 */
 				PHALCON_CALL_CE_STATIC(&active_row, ce, "cloneresultmap", model, row, column_map, dirty_state, keep_snapshots, source_model);
@@ -293,7 +294,7 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, valid){
 			PHALCON_OBS_VAR(rows_objects);
 			phalcon_read_property_this(&rows_objects, this_ptr, SL("_rowsOthers"), PH_NOISY TSRMLS_CC);
 			if (!phalcon_array_isset_fetch(&active_row, rows_objects, key)) {
-				/** 
+				/**
 				 * Other kinds of hydrations
 				 */
 				PHALCON_CALL_CE_STATIC(&active_row, ce, "cloneresultmaphydrate", row, column_map, hydrate_mode, source_model);
@@ -321,11 +322,15 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, valid){
  */
 PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, toArray){
 
-	zval *rename_columns = NULL, *records, *valid = NULL, *current = NULL, *arr = NULL;
+	zval *columns = NULL, *rename_columns = NULL, *records, *valid = NULL, *current = NULL, *arr = NULL;
 
 	PHALCON_MM_GROW();
 
-	phalcon_fetch_params(1, 0, 1, &rename_columns);
+	phalcon_fetch_params(1, 0, 2, &columns, &rename_columns);
+
+	if (!columns) {
+		columns = PHALCON_GLOBAL(z_null);
+	}
 
 	if (!rename_columns) {
 		rename_columns = PHALCON_GLOBAL(z_true);
@@ -344,7 +349,7 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, toArray){
 
 		PHALCON_CALL_METHOD(&current, this_ptr, "current");
 		if (Z_TYPE_P(current) == IS_OBJECT && phalcon_method_exists_ex(current, SS("toarray") TSRMLS_CC) == SUCCESS) {
-			PHALCON_CALL_METHOD(&arr, current, "toarray", PHALCON_GLOBAL(z_null), rename_columns);
+			PHALCON_CALL_METHOD(&arr, current, "toarray", columns, rename_columns);
 			phalcon_array_append(&records, arr, PH_COPY);
 		} else {
 			phalcon_array_append(&records, current, PH_COPY);
@@ -392,12 +397,12 @@ PHP_METHOD(Phalcon_Mvc_Model_Resultset_Simple, serialize){
 	phalcon_array_update_string(&data, SL("columnMap"), column_map, PH_COPY);
 	phalcon_array_update_string(&data, SL("hydrateMode"), hydrate_mode, PH_COPY);
 
-	/** 
+	/**
 	 * Force to re-execute the query
 	 */
 	phalcon_update_property_bool(this_ptr, SL("_activeRow"), 0 TSRMLS_CC);
 
-	/** 
+	/**
 	 * Serialize the cache using the serialize function
 	 */
 	phalcon_serialize(return_value, &data TSRMLS_CC);
