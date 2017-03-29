@@ -383,7 +383,7 @@ PHP_METHOD(Phalcon_Date, hours){
 
 	if (!start) {
 		PHALCON_INIT_VAR(start);
-	} 
+	}
 
 	p = Z_LVAL_P(step);
 	if (p < 1) {
@@ -443,8 +443,8 @@ PHP_METHOD(Phalcon_Date, ampm){
  * @param string $ampm
  * @return string
  */
-PHP_METHOD(Phalcon_Date, adjust){	
-	
+PHP_METHOD(Phalcon_Date, adjust){
+
 	zval *hour, *ampm, *lowercased_ampm;
 	char buf[2];
 	int h;
@@ -510,7 +510,7 @@ PHP_METHOD(Phalcon_Date, days){
 
 		PHALCON_INIT_VAR(tmp);
 		ZVAL_STRING(tmp, "Y", 1);
-		
+
 		PHALCON_OBS_NVAR(year);
 		PHALCON_CALL_FUNCTION(&year, "date", tmp);
 	}
@@ -530,8 +530,8 @@ PHP_METHOD(Phalcon_Date, days){
 	PHALCON_INIT_VAR(tmp2);
 	ZVAL_LONG(tmp2, 0);
 
-	PHALCON_CALL_FUNCTION(&tmp, "mktime", tmp1, tmp2, tmp2, month, tmp1, year);	
-	
+	PHALCON_CALL_FUNCTION(&tmp, "mktime", tmp1, tmp2, tmp2, month, tmp1, year);
+
 	PHALCON_INIT_NVAR(tmp1);
 	ZVAL_STRING(tmp1, "t", 1);
 
@@ -642,7 +642,7 @@ PHP_METHOD(Phalcon_Date, years){
 		}
 		PHALCON_INIT_VAR(tmp);
 		ZVAL_STRING(tmp, "Y", 1);
-		
+
 		PHALCON_OBS_NVAR(start);
 		PHALCON_CALL_FUNCTION(&start, "date", tmp);
 
@@ -657,7 +657,7 @@ PHP_METHOD(Phalcon_Date, years){
 		}
 		PHALCON_INIT_NVAR(tmp);
 		ZVAL_STRING(tmp, "Y", 1);
-		
+
 		PHALCON_OBS_NVAR(end);
 		PHALCON_CALL_FUNCTION(&end, "date", tmp);
 
@@ -665,7 +665,7 @@ PHP_METHOD(Phalcon_Date, years){
 	} else {
 		e = phalcon_get_intval(end);
 	}
-	
+
 	array_init(return_value);
 
 	for (i = s; i <= e; i++) {
@@ -734,7 +734,7 @@ PHP_METHOD(Phalcon_Date, span){
 	PHALCON_CALL_FUNCTION(&output, "array_combine", tmp1, tmp);
 
 	remote_time = phalcon_get_intval(remote);
-	
+
 	if (!local || Z_TYPE_P(local) == IS_NULL) {
 		local_time = (long) time(NULL);
 	} else {
@@ -1096,7 +1096,7 @@ PHP_METHOD(Phalcon_Date, unix2dos){
 
 	phalcon_fetch_params(1, 0, 1, &timestamp);
 
-	
+
 	if (!timestamp || (Z_TYPE_P(timestamp) == IS_BOOL && !zend_is_true(timestamp))) {
 		PHALCON_CALL_FUNCTION(&day, "getdate");
 	} else {
@@ -1111,13 +1111,13 @@ PHP_METHOD(Phalcon_Date, unix2dos){
 
 	PHALCON_OBS_VAR(mday);
 	phalcon_array_fetch_string(&mday, day, SL("mday"), PH_NOISY);
-	
+
 	PHALCON_OBS_VAR(hours);
 	phalcon_array_fetch_string(&hours, day, SL("hours"), PH_NOISY);
-	
+
 	PHALCON_OBS_VAR(minutes);
 	phalcon_array_fetch_string(&minutes, day, SL("minutes"), PH_NOISY);
-	
+
 	PHALCON_OBS_VAR(seconds);
 	phalcon_array_fetch_string(&seconds, day, SL("seconds"), PH_NOISY);
 
@@ -1148,7 +1148,7 @@ PHP_METHOD(Phalcon_Date, unix2dos){
  * @return int
  */
 PHP_METHOD(Phalcon_Date, dos2unix){
-	
+
 	zval *timestamp = NULL;
 	zval *hrs, *min, *sec, *mon, *day, *year;
 	long t = 0;
@@ -1195,7 +1195,7 @@ PHP_METHOD(Phalcon_Date, dos2unix){
  * @return string
  */
 PHP_METHOD(Phalcon_Date, formatted_time){
-	
+
 	zval *datetime_str = NULL, *timestamp_format = NULL, *timezone = NULL, *tz, *dt, *tmp = NULL, *tmp1 = NULL;
 	zend_class_entry *ce0, *ce1;
 
@@ -1232,7 +1232,7 @@ PHP_METHOD(Phalcon_Date, formatted_time){
 	} else {
 		PHALCON_SEPARATE_PARAM(timezone);
 	}
-	
+
 	if (!zend_is_true(timezone)) {
 		PHALCON_CALL_FUNCTION(&timezone, "date_default_timezone_get");
 	}
@@ -1273,7 +1273,7 @@ PHP_METHOD(Phalcon_Date, formatted_time){
  * @return string
  */
 PHP_METHOD(Phalcon_Date, valid){
-	
+
 	zval *date = NULL, *format = NULL, *format_date = NULL, *errors = NULL, *warning_count = NULL, *error_count = NULL;
 	zend_class_entry *ce0;
 
@@ -1285,7 +1285,7 @@ PHP_METHOD(Phalcon_Date, valid){
 		PHALCON_INIT_VAR(format);
 		ZVAL_STRING(format, "Y-m-d", 1);
 	} else if (Z_TYPE_P(format) == IS_NULL) {
-		PHALCON_INIT_NVAR(format);
+		PHALCON_INIT_VAR(format);
 		ZVAL_STRING(format, "Y-m-d", 1);
 	}
 
