@@ -1015,7 +1015,7 @@ class ValidationTest extends PHPUnit_Framework_TestCase
 		)));
 
 		$validation->setLabels(array('firstname' => 'First name'));
-                
+
 		$messages = $validation->validate($_POST);
 
 		$expectedMessages = Phalcon\Validation\Message\Group::__set_state(array(
