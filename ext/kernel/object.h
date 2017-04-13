@@ -196,21 +196,13 @@ int phalcon_update_property_zval_long(zval *obj, const zval *property, int value
 int phalcon_update_property_zval_zval(zval *obj, const zval *property, zval *value TSRMLS_DC) PHALCON_ATTR_NONNULL;
 int phalcon_update_property_empty_array(zval *object, const char *property, zend_uint property_length TSRMLS_DC) PHALCON_ATTR_NONNULL;
 
-int phalcon_update_property_this_quick(zval *object, const char *property_name, zend_uint property_length, zval *value, ulong key TSRMLS_DC);
-
 /**
  * Updates properties on this_ptr
  * Variables must be defined in the class definition. This function ignores magic methods or dynamic properties
  */
 PHALCON_ATTR_NONNULL static inline int phalcon_update_property_this(zval *object, const char *property_name, zend_uint property_length, zval *value TSRMLS_DC)
 {
-#ifdef __GNUC__
-	if (__builtin_constant_p(property_name) && __builtin_constant_p(property_length)) {
-		return phalcon_update_property_this_quick(object, property_name, property_length, value, zend_inline_hash_func(property_name, property_length + 1) TSRMLS_CC);
-	}
-#endif
-
-	return phalcon_update_property_this_quick(object, property_name, property_length, value, zend_hash_func(property_name, property_length + 1) TSRMLS_CC);
+	return phalcon_update_property_zval(object, property_name, property_length, value TSRMLS_CC);
 }
 
 
