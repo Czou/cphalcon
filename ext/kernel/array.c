@@ -33,6 +33,7 @@ int phalcon_array_isset_fetch(zval **fetched, const zval *arr, const zval *index
 	int result;
 
 	if (Z_TYPE_P(arr) != IS_ARRAY) {
+		ALLOC_INIT_ZVAL(*fetched);
 		return 0;
 	}
 
@@ -65,7 +66,7 @@ int phalcon_array_isset_fetch(zval **fetched, const zval *arr, const zval *index
 		*fetched = *val;
 		return 1;
 	}
-
+	ALLOC_INIT_ZVAL(*fetched);
 	return 0;
 }
 
@@ -79,7 +80,7 @@ int phalcon_array_isset_quick_string_fetch(zval **fetched, const zval *arr, cons
 			return 1;
 		}
 	}
-
+	ALLOC_INIT_ZVAL(*fetched);
 	return 0;
 }
 
@@ -93,7 +94,7 @@ int phalcon_array_isset_long_fetch(zval **fetched, const zval *arr, ulong index)
 			return 1;
 		}
 	}
-
+	ALLOC_INIT_ZVAL(*fetched);
 	return 0;
 }
 

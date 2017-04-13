@@ -3036,7 +3036,7 @@ PHP_METHOD(Phalcon_Mvc_Model_Query, _prepareSelect){
 	PHALCON_INIT_VAR(sql_select);
 	array_init_size(sql_select, 10);
 
-	if (distinct) {
+	if (Z_TYPE_P(distinct) != IS_NULL) {
 		phalcon_array_update_string(&sql_select, SL("distinct"), distinct, PH_COPY);
 	}
 
